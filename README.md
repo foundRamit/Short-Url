@@ -8,16 +8,18 @@ A simple URL shortener service built with **Node.js**, **Express**, and **MongoD
 
 ```
 urlShortener/
-├── config/
-│   └── db.js               # MongoDB connection setup
-├── controllers/
-│   └── urlController.js    # Logic for generating, redirecting, and analytics
-├── models/
-│   └── urlModel.js         # URL schema model
-├── routes/
-│   └── urlRoutes.js        # Routing definitions
-├── app.js                  # Main Express app
-├── index.js                # Server entry point
+├── src/
+│ ├── config/
+│ │ └── db.js # MongoDB connection setup
+│ ├── controllers/
+│ │ └── urlController.js # Logic for generating, redirecting, and analytics
+│ ├── models/
+│ │ └── urlModel.js # URL schema model
+│ ├── routes/
+│ │ └── urlRoutes.js # Routing definitions
+│ ├── app.js # Main Express app
+├── index.js # Server entry point
+├── package.json
 ```
 
 ---
