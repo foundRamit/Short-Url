@@ -1,5 +1,5 @@
 // Import the URL model
-const URL = require('../models/urlModel');
+const urlModel = require('../models/urlModel');
 // Import shortid to generate short unique strings
 const shortid = require("shortid");
 
@@ -14,11 +14,11 @@ exports.handleGenerateNewShortURL = async (req, res) => {
         }
         
         const shortId = shortid();
-        
-        const result = await URL.create({
-            shortId: shortId,               
-            redirectUrl: body.url,          
-            visitHistory: [],               
+
+        const result = await urlModel.create({
+            shortId: shortId,
+            redirectUrl: body.url,
+            visitHistory: [],
         });
 
         
@@ -42,7 +42,7 @@ exports.handleRedirectURL = async (req, res) =>{
     try {
          const shortId = req.params.shortId;
 
-         const entry = await URL.findOne({shortId});
+         const entry = await urlModel.findOne({shortId});
 
          if(!entry){
             return res.status(404).json({msg: "cannot find shortId"});

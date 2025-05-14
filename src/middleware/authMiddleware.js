@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken');
 
 const authMiddleware = (req, res, next) => {
   const authHeader = req.headers['authorization'];
+  console.log("Authorization header:", authHeader);
   const token = authHeader && authHeader.split(' ')[1];
 
   if (!token) {
@@ -14,8 +15,8 @@ const authMiddleware = (req, res, next) => {
     if (err) {
       return res.status(403).json({ msg: "Invalid or expired token." });
     }
-
-    req.user = decoded; // { userId: ... }
+    console.log("Decoded token:", decoded);
+    
     next();
   });
 };
