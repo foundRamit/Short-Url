@@ -7,6 +7,7 @@ const shortid = require("shortid");
 exports.handleGenerateNewShortURL = async (req, res) => {
     try {
         const body = req.body;
+        console.log("🔍 Received Body:", req.body);
 
         if (!body.url) {
             return res.status(400).json({ error: "url is required" });
@@ -20,11 +21,15 @@ exports.handleGenerateNewShortURL = async (req, res) => {
             visitHistory: [],               
         });
 
+        
+            
         return res.status(200).json({
             message: "Short URL created successfully",
             id: shortId,
             data: result
         });
+       
+
 
     } catch (err) {
         console.error(err);
