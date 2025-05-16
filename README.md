@@ -1,74 +1,150 @@
-# Short-Url
 
-A simple URL shortener service built with Node.js, Express, MongoDB, and JWT-based authentication.
+# 🔗 URL Shortener API
 
-## Features
+A simple and secure URL shortener built using **Node.js**, **Express**, and **MongoDB**. Includes user authentication and analytics for each shortened URL.
 
-- Shorten long URLs to concise, shareable links.
-- Redirect users to the original URL using the shortened link.
-- JWT-based authentication for secure access.
-- MongoDB integration for persistent storage.
+---
 
-## Project Structure
+## 📁 Project Structure
 
 ```
 urlShortener/
-├── src/
+├── src
 │   ├── config/
-│   │   └── db.js             # MongoDB connection setup
+│   │   └── db.js                 # MongoDB connection
 │   ├── controllers/
-│   │   └── urlController.js  # Logic for generating, redirecting, and analytics
+│   │   ├── authController.js    # Signup/Login logic
+│   │   └── urlController.js     # URL shortening, redirection, analytics
+│   ├── middleware/
+│   │   └── authMiddleware.js    # JWT auth middleware
 │   ├── models/
-│   │   └── urlModel.js       # URL schema model
-│   ├── routes/
-│   │   └── urlRoutes.js      # Routing definitions
-│   ├── app.js                # Main Express app
-├── index.js                  # Server entry point
-├── package.json
-├── .env.sample               # Sample environment variables
-├── README.md
+│   │   ├── urlModel.js          # Schema for URLs
+│   │   └── userModel.js         # Schema for users
+│   └── routes/
+│       ├── authRoutes.js        # /auth/signup, /auth/login
+│       └── urlRoutes.js         # /url/...
+├── app.js                       # Express app setup
+└── index.js                     # Entry point
 ```
 
-## Getting Started
+---
 
-### Prerequisites
+## 🛠️ Tech Stack
 
-- Node.js v14 or higher
-- MongoDB running locally at: `mongodb://127.0.0.1:27017`
+- Node.js
+- Express.js
+- MongoDB
+- Mongoose
+- JSON Web Tokens (JWT)
+- bcryptjs
 
-### Installation
+---
 
-1. Clone the repository:
+## 🔐 User Authentication
 
-   ```bash
-   git clone https://github.com/foundRamit/Short-Url.git
-   cd Short-Url
-   ```
+### Signup
+**POST** `/auth/signup`
 
-2. Install dependencies:
+```json
+{
+  "username": "yourUsername",
+  "password": "yourPassword"
+}
+```
 
-   ```bash
-   npm install
-   ```
+### Login
+**POST** `/auth/login`
 
-3. Configure environment variables:
+Returns a **JWT token** to use with protected routes.
 
-   - Create a `.env` file in the root directory.
-   - Use `.env.sample` as a reference for required variables.
+---
 
-4. Start the server:
+## ✂️ Shorten a URL
 
-   ```bash
-   node index.js
-   ```
+**POST** `/url/`
 
-   The server will run at: [http://localhost:3001](http://localhost:3001)
+**Headers:**  
+`Authorization: Bearer <token>`
 
-## API Endpoints
+**Body:**
+```json
+{
+  "url": "https://example.com"
+}
+```
 
-- `POST /api/shorten` – Shorten a long URL.
-- `GET /:shortId` – Redirect to the original URL.
+Returns:
+```json
+{
+  "message": "Short URL created successfully",
+  "id": "shortId",
+  "data": { ... }
+}
+```
 
-## License
+---
 
-This project is licensed under the MIT License.
+## 🔁 Redirect
+
+**GET** `/url/:shortId`
+
+Redirects to the original URL and logs the visit.
+
+---
+
+## 📊 Get Analytics
+
+**GET** `/url/analytics/:shortId`
+
+**Headers:**  
+`Authorization: Bearer <token>`
+
+Returns:
+```json
+{
+  "totalClicks": 3,
+  "visitHistory": [
+    { "timestamp": 1710000000000 },
+    ...
+  ]
+}
+```
+
+---
+
+## ⚙️ Setup
+
+1. Clone the repo  
+2. Run `npm install`  
+3. Set up your `.env` file:
+
+```
+JWT_SECRET_KEY=your_secret_key
+```
+
+4. Run the server:
+
+```bash
+npm start
+```
+
+Default port: `http://localhost:3001`
+
+---
+
+## 📌 Notes
+
+- All sensitive routes are protected using JWT
+- MongoDB runs locally on `mongodb://127.0.0.1:27017/short-url`
+
+---
+
+## 🧑‍💻 Author
+
+Made by **Ramit Taparia**
+
+---
+
+## 📃 License
+
+MIT

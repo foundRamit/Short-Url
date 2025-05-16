@@ -66,7 +66,7 @@ exports.handleGetAnalytics = async(req, res) =>{
     try {
         const shortId = req.params.shortId;
 
-        const entry = await URL.findOne({shortId});
+        const entry = await urlModel.findOne({shortId});
 
         if(!entry){
             return res.status(404).json({msg:"cannot find shortId"})
