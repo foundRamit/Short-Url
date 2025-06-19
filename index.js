@@ -8,4 +8,5 @@ connectDB();
 
 app.listen(PORT, () => {
     console.log(`Server running at: http://localhost:${PORT}`);
-}); 
+    console.log('URL Shortener API is ready to use.')
+});

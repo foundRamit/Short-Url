@@ -21,6 +21,7 @@ exports.signup = async (req, res) => {
 
     } catch (err) {
         console.error("Signup error:", err.message);
+        
         return res.status(500).json({ msg: "Internal server error", error: err.message });
     }
 };
